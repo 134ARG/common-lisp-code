@@ -3,8 +3,7 @@
              (cond ((zerop current)
                     (if (null lst) length (iter length lst)))
                    (t (aif (max->= current lst)
-			   (iter (- current it)
-				 (remove it lst :count 1)))))))
+			   (iter (- current it) (remove it lst :count 1)))))))
     (iter length lst)))
 
 (defmacro aif (condition then-part &optional else-part)
