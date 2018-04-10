@@ -2,13 +2,9 @@
   (labels ((iter (current lst)
              (cond ((zerop current)
                     (if (null lst) length (iter length lst)))
-                   (t (aif (max->= current lst)
-			   (iter (- current it) (remove it lst :count 1)))))))
+                   (t (let ((it (max->= current lst)))
+			(when it (iter (- current it) (remove it lst :count 1))))))))
     (iter length lst)))
-
-(defmacro aif (condition then-part &optional else-part)
-  `(let ((it ,condition))
-     (if it ,then-part ,else-part)))
 
 (defun max->= (elt lst)
   (find-if #'(lambda (x) (<= x elt)) lst))
